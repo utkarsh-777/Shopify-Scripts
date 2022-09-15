@@ -1,7 +1,7 @@
 const shop = Shopify?.shop;
 const customerId = __st?.cid;
 const backendURL =
-  "https://d715-2409-4050-2db7-ee52-5874-7caa-a775-3274.in.ngrok.io";
+  "https://8c3d-2409-4050-2db7-ee52-5874-7caa-a775-3274.in.ngrok.io";
 const onProductPage = window.location.href.includes("products");
 const cssLinks = [
   "https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css",
@@ -70,10 +70,8 @@ const main = () => {
   const productData = getProductInfo();
   const icon = document.createElement("i");
   icon.setAttribute("class", "bi bi-bell-fill");
-  bellElementDiv.appendChild(icon);
-
   icon.addEventListener("click", () => sendProductData(productData));
-
+  bellElementDiv.appendChild(icon);
   productForm.appendChild(bellElementDiv);
 };
 
