@@ -18,19 +18,22 @@ const injectCSS = () => {
   });
 };
 
-const getProductInfo = async () => {
+const getProductInfo = () => {
   try {
-    const data = await fetch(window.location.href + ".js");
-    return data.json();
+    fetch(window.location.href + ".js")
+      .then((response) => response.json())
+      .then((data) => {
+        return data;
+      });
   } catch (error) {
     console.log(error);
   }
 };
 
-const sendProductData = async (data) => {
+const sendProductData = (data) => {
   try {
-    if (customerId && data) {
-      const response = await fetch(
+    if (customerId && data && shop) {
+      fetch(
         `${backendURL}/api/product-subscribe?shop=${shop}?customerId=${customerId}`,
         {
           method: "POST",
@@ -39,9 +42,15 @@ const sendProductData = async (data) => {
           },
           body: JSON.stringify(data),
         },
-      );
-      console.log(response.json());
-      return alert(response.json());
+      )
+        .then((response) => response.json())
+        .then((data) => {
+          console.log(data);
+          alert(data?.message);
+        })
+        .catch((error) => {
+          return alert(error.message);
+        });
     }
     return alert("Customer has to be logged in!");
   } catch (error) {
@@ -49,7 +58,7 @@ const sendProductData = async (data) => {
   }
 };
 
-const main = async () => {
+const main = () => {
   const bellElementDiv = document.createElement("div");
   bellElementDiv.setAttribute("class", "bellIcon");
 
@@ -58,15 +67,12 @@ const main = async () => {
     return;
   }
 
-  const productData = await getProductInfo();
+  const productData = getProductInfo();
   const icon = document.createElement("i");
   icon.setAttribute("class", "bi bi-bell-fill");
   bellElementDiv.appendChild(icon);
 
-  icon.addEventListener(
-    "click",
-    async () => await sendProductData(productData),
-  );
+  icon.addEventListener("click", () => sendProductData(productData));
 
   productForm.appendChild(bellElementDiv);
 };
