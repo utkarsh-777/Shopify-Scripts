@@ -1,3 +1,7 @@
+const shop = Shopify?.shop;
+const customerId = __st?.cid;
+const backendURL =
+  "https://34be-2409-4050-2db7-ee52-5874-7caa-a775-3274.in.ngrok.io";
 const onProductPage = window.location.href.includes("products");
 const cssLinks = [
   "https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css",
@@ -23,27 +27,48 @@ const getProductInfo = async () => {
   }
 };
 
+const sendProductData = async (data) => {
+  try {
+    if (customerId && data) {
+      const response = await fetch(
+        `${backendURL}/api/product-subscribe?shop=${shop}?customerId=${customerId}`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(data),
+        },
+      );
+      return alert(response.json()?.message);
+    }
+    return alert("Customer has to be logged in!");
+  } catch (error) {
+    return alert(error.message);
+  }
+};
+
 const main = async () => {
   const bellElementDiv = document.createElement("div");
   bellElementDiv.setAttribute("class", "bellIcon");
 
   const productForm = document.getElementsByClassName("product-form")[0];
-  if (!productForm) {
+  if (!onProductPage || !productForm) {
     return;
   }
 
-  injectCSS();
   const productData = await getProductInfo();
-  console.log(productData);
   const icon = document.createElement("i");
   icon.setAttribute("class", "bi bi-bell-fill");
   bellElementDiv.appendChild(icon);
 
-  icon.addEventListener("click", function () {
-    alert("bell clicked!");
-  });
+  icon.addEventListener("click", await sendProductData(productData));
 
   productForm.appendChild(bellElementDiv);
 };
 
-main();
+// Only works if customer is logged in!
+if (customerId) {
+  injectCSS();
+  main();
+}
