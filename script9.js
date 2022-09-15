@@ -71,6 +71,6 @@ const main = async () => {
 
 //Works only when customer is logged in!
 if (customerId) {
-  injectCSS();
+  injectCSS(); //inject css
   main();
 }
