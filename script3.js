@@ -1,7 +1,7 @@
 const shop = Shopify?.shop;
 const customerId = __st?.cid;
 const backendURL =
-  "https://34be-2409-4050-2db7-ee52-5874-7caa-a775-3274.in.ngrok.io";
+  "https://d715-2409-4050-2db7-ee52-5874-7caa-a775-3274.in.ngrok.io";
 const onProductPage = window.location.href.includes("products");
 const cssLinks = [
   "https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css",
