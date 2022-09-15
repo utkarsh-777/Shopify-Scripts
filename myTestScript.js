@@ -14,7 +14,16 @@ const injectCSS = () => {
   });
 };
 
-const main = () => {
+const getProductInfo = async () => {
+  try {
+    const data = await fetch(window.location.href + ".js");
+    return data.json();
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+const main = async () => {
   const bellElementDiv = document.createElement("div");
   bellElementDiv.setAttribute("class", "bellIcon");
 
@@ -24,6 +33,8 @@ const main = () => {
   }
 
   injectCSS();
+  const productData = await getProductInfo();
+  console.log(productData);
   const icon = document.createElement("i");
   icon.setAttribute("class", "bi bi-bell-fill");
   bellElementDiv.appendChild(icon);
