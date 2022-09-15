@@ -40,7 +40,8 @@ const sendProductData = async (data) => {
           body: JSON.stringify(data),
         },
       );
-      return alert(response.json()?.message);
+      console.log(response.json());
+      return alert(response.json());
     }
     return alert("Customer has to be logged in!");
   } catch (error) {
@@ -62,7 +63,10 @@ const main = async () => {
   icon.setAttribute("class", "bi bi-bell-fill");
   bellElementDiv.appendChild(icon);
 
-  icon.addEventListener("click", await sendProductData(productData));
+  icon.addEventListener(
+    "click",
+    async () => await sendProductData(productData),
+  );
 
   productForm.appendChild(bellElementDiv);
 };
