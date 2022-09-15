@@ -1,7 +1,7 @@
 const shop = Shopify?.shop;
 const customerId = __st?.cid;
 const backendURL =
-  "https://fc5e-2409-4050-2db7-ee52-5874-7caa-a775-3274.in.ngrok.io";
+  "https://2b3d-2409-4050-2db7-ee52-5874-7caa-a775-3274.in.ngrok.io";
 const onProductPage = window.location.href.includes("products");
 const cssLinks = [
   "https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css",
@@ -28,11 +28,10 @@ const getProductInfo = async () => {
 };
 
 const sendProductData = (data) => {
-  console.log(customerId, data, shop);
   try {
     if (customerId && data && shop) {
       fetch(
-        `${backendURL}/api/product-subscribe?shop=${shop}?customerId=${customerId}`,
+        `${backendURL}/api/product-subscribe?shop=${shop}&customerId=${customerId}`,
         {
           method: "POST",
           headers: {
@@ -43,14 +42,12 @@ const sendProductData = (data) => {
       )
         .then((response) => response.json())
         .then((data) => {
-          console.log(data);
           return alert(data?.message);
         })
         .catch((error) => {
           return alert(error.message);
         });
     }
-    return alert("Customer has to be logged in!");
   } catch (error) {
     return alert(error.message);
   }
