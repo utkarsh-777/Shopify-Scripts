@@ -1,8 +1,6 @@
-///////////////////////////////////////////////////////////
 const shop = Shopify?.shop;
-const customerId = __st?.cid;
 const backendURL =
-  "https://9d34-2409-4050-2db7-ee52-5874-7caa-a775-3274.in.ngrok.io";
+  "https://4585-2409-4050-2db7-ee52-5874-7caa-a775-3274.in.ngrok.io";
 const onProductPage = window.location.href.includes("products");
 const cssLinks = [
   "https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css",
@@ -28,7 +26,8 @@ const getProductInfo = async () => {
   }
 };
 
-const sendProductData = (data) => {
+const sendProductData = (data, customerId) => {
+  console.log(customerId, data, shop);
   try {
     if (customerId && data && shop) {
       fetch(
@@ -64,17 +63,17 @@ const main = async () => {
   if (!onProductPage || !productForm) {
     return;
   }
-
+  const customerId = __st?.cid;
   const productData = await getProductInfo();
   const icon = document.createElement("i");
   icon.setAttribute("class", "bi bi-bell-fill");
-  icon.addEventListener("click", () => sendProductData(productData));
+  icon.addEventListener("click", () =>
+    sendProductData(productData, customerId),
+  );
   bellElementDiv.appendChild(icon);
   productForm.appendChild(bellElementDiv);
 };
 
 // Only works if customer is logged in!
-if (customerId) {
-  injectCSS();
-  main();
-}
+injectCSS();
+main();
